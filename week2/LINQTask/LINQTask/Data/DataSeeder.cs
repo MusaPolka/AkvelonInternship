@@ -15,7 +15,8 @@ namespace LINQTask.Data
             {
                 new Consumer(){ConsumerCode = 1, Address = "Address1", YearOfBirth = 2000},
                 new Consumer(){ConsumerCode = 2, Address = "Address2", YearOfBirth = 1999},
-                new Consumer(){ConsumerCode = 3, Address = "Address3", YearOfBirth = 1998}
+                new Consumer(){ConsumerCode = 3, Address = "Address3", YearOfBirth = 1998},
+                new Consumer(){ConsumerCode = 4, Address = "Address4", YearOfBirth = 1998}
             };
 
             return consumers;
@@ -26,7 +27,7 @@ namespace LINQTask.Data
             var goods = new List<Good>
             {
                 new Good(){ArticleNumber = "AB123-1234", Category = "Fruits", Country = "Russia"},
-                new Good(){ArticleNumber = "CD456-7891", Category = "Beverage", Country = "Kazakhstan"},
+                new Good(){ArticleNumber = "CD456-7891", Category = "Beverages", Country = "Kazakhstan"},
                 new Good(){ArticleNumber = "EF789-1234", Category = "Snacks", Country = "Ukrain"}
             };
 
@@ -39,7 +40,7 @@ namespace LINQTask.Data
             {
                 new Discount(){ConsumerCode = 1, DiscountAmount = 15, StoreName = "FixPrice"},
                 new Discount(){ConsumerCode = 2, DiscountAmount = 10, StoreName = "Magnum"},
-                new Discount(){ConsumerCode = 3, DiscountAmount = 5, StoreName = "Green"}
+                new Discount(){ConsumerCode = 4, DiscountAmount = 5, StoreName = "Green"}
             };
 
             return discounts;
@@ -63,7 +64,8 @@ namespace LINQTask.Data
             {
                 new Purchase(){ConsumerCode = 1, ArticleNumber = "AB123-1234", StoreName = "FixPrice"},
                 new Purchase(){ConsumerCode = 2, ArticleNumber = "CD456-7891", StoreName = "Magnum"},
-                new Purchase(){ConsumerCode = 3, ArticleNumber = "EF789-1234", StoreName = "Green"}
+                new Purchase(){ConsumerCode = 4, ArticleNumber = "EF789-1234", StoreName = "Green"},
+                new Purchase(){ConsumerCode = 4, ArticleNumber = "AB123-1234", StoreName = "Green"}
             };
 
             return purchases;
