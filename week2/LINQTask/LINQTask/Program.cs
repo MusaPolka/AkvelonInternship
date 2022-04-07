@@ -15,12 +15,12 @@ namespace LINQTask
             var purchases = DataSeeder.SeedPurchases();
 
             var list = purchases.Join(consumers, p => p.ConsumerCode, c => c.ConsumerCode, (p, c) => new
-                {
-                    ConsumerCode = p.ConsumerCode,
-                    YearOfBirth = c.YearOfBirth,
-                    ArticleNumber = p.ArticleNumber,
-                    StoreName = p.StoreName
-                })
+            {
+                ConsumerCode = p.ConsumerCode,
+                YearOfBirth = c.YearOfBirth,
+                ArticleNumber = p.ArticleNumber,
+                StoreName = p.StoreName
+            })
                 .Join(goods, p => p.ArticleNumber, g => g.ArticleNumber, (p, g) => new
                 {
                     Country = g.Country,
@@ -49,7 +49,7 @@ namespace LINQTask
                     PriceAmount = p.PriceAmount,
                     Discount
                 })
-                .SelectMany(x => x.Discount.DefaultIfEmpty(new Data.Models.Discount { DiscountAmount = 100}),
+                .SelectMany(x => x.Discount.DefaultIfEmpty(new Data.Models.Discount { DiscountAmount = 100 }),
                     (x, p) => new
                     {
                         Country = x.Country,
@@ -60,9 +60,12 @@ namespace LINQTask
                         PriceAmount = x.PriceAmount - x.PriceAmount * p.DiscountAmount / 100
                     }
                 )
-                .OrderBy(x => x.YearOfBirth)
-                .GroupBy(x => x.YearOfBirth)
-                .First()
+                .GroupBy(x => x.Country)
+                .GroupBy(x => x.First().StoreName)
+                .Select(x => x.Select(x => x.First()).First())
+                //.GroupBy(x => x.Select(x => x.StoreName))
+                //.Select(x => x.Select(x => x.OrderByDescending(x => x.YearOfBirth).First()).First())
+
                 .ToList();
 
             foreach (var item in list)

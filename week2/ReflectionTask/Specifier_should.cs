@@ -210,6 +210,7 @@ namespace Documentation
                     new ApiParamDescription
                     {
                         ParamDescription = new CommonDescription("userId"),
+                        Required = false
                     },
                     new ApiParamDescription
                     {
@@ -221,7 +222,8 @@ namespace Documentation
                 },
                 ReturnDescription = new ApiParamDescription
                 {
-                    ParamDescription = new CommonDescription()
+                    ParamDescription = new CommonDescription(),
+                    Required = false
                 }
             };
             AssertDescriptionAreEquals(expected, description);
@@ -241,6 +243,7 @@ namespace Documentation
                     new ApiParamDescription
                     {
                         ParamDescription = new CommonDescription("userId"),
+                        Required = false
                     },
                 },
                 ReturnDescription = new ApiParamDescription

@@ -38,7 +38,7 @@ namespace Documentation
     {
         public CommonDescription ParamDescription { get; set; }
 
-        public bool Required { get; set; }
+        public bool? Required { get; set; }
         public object MinValue { get; set; }
         public object MaxValue { get; set; }
     }

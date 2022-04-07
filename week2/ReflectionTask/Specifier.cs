@@ -102,12 +102,131 @@ namespace Documentation
 
         public ApiParamDescription GetApiMethodParamFullDescription(string methodName, string paramName)
         {
-            return new ApiParamDescription();
+            var apiParamDescription = new ApiParamDescription();
+            var commonDescription = new CommonDescription();
+            commonDescription.Name = paramName;
+
+            Type type = typeof(T);
+
+            var method = type.GetMethod(methodName);
+
+            if (method == null)
+            {
+                apiParamDescription.MinValue = null;
+                apiParamDescription.MaxValue = null;
+                apiParamDescription.Required = false;
+                apiParamDescription.ParamDescription = commonDescription;
+
+                return apiParamDescription;
+            }
+
+            var parameters = method.GetParameters();
+
+            var parameter = parameters.SingleOrDefault(x => x.Name == paramName);
+
+            if (parameter == null)
+            {
+                apiParamDescription.MinValue = null;
+                apiParamDescription.MaxValue = null;
+                apiParamDescription.Required = false;
+                apiParamDescription.ParamDescription = commonDescription;
+
+                return apiParamDescription;
+            }
+
+            var paramValue = parameter.GetCustomAttribute<ApiIntValidationAttribute>();
+            var paramRequired = parameter.GetCustomAttribute<ApiRequiredAttribute>();
+            var paramDescription = parameter.GetCustomAttribute<ApiDescriptionAttribute>();
+
+
+            if (paramValue != null)
+            {
+                apiParamDescription.MinValue = paramValue.MinValue;
+                apiParamDescription.MaxValue = paramValue.MaxValue;
+            }
+
+            if (paramRequired != null)
+            {
+                apiParamDescription.Required = paramRequired.Required;
+            }
+
+            if (paramDescription != null)
+            {
+                commonDescription.Description = paramDescription.Description;
+                apiParamDescription.ParamDescription = commonDescription;
+            }
+
+            apiParamDescription.ParamDescription = commonDescription;
+
+            return apiParamDescription;
         }
 
         public ApiMethodDescription GetApiMethodFullDescription(string methodName)
         {
-            return new ApiMethodDescription();
+            ApiMethodDescription apiMethodDescription = new ApiMethodDescription();
+            CommonDescription commonMethodDescription = new CommonDescription();
+            ApiParamDescription apiReturnDescription = new ApiParamDescription();
+
+            Type type = typeof(T);
+
+            var method = type.GetMethod(methodName);
+
+            if (method == null)
+            {
+                return apiMethodDescription;
+            }
+            commonMethodDescription.Name = methodName;
+
+            var methodDescription = method.GetCustomAttribute<ApiDescriptionAttribute>();
+
+            if (methodDescription != null)
+            {
+                commonMethodDescription.Description = methodDescription.Description;
+            }
+
+            var apiMethod = method.GetCustomAttribute<ApiMethodAttribute>();
+
+            if (apiMethod == null)
+            {
+                return null;
+            }
+
+            apiMethodDescription.MethodDescription = commonMethodDescription;
+
+
+            var parameters = method.GetParameters();
+
+            ApiParamDescription[] paramDescriptions = new ApiParamDescription[parameters.Length];
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                paramDescriptions[i] = GetApiMethodParamFullDescription(methodName, parameters[i].Name);
+            }
+
+            apiMethodDescription.ParamDescriptions = paramDescriptions;
+
+
+            var returnParamDescription = method.ReturnParameter.GetCustomAttribute<ApiDescriptionAttribute>();
+            var returnParamValue = method.ReturnParameter.GetCustomAttribute<ApiIntValidationAttribute>();
+            var returnParamRequired = method.ReturnParameter.GetCustomAttribute<ApiRequiredAttribute>();
+
+            if (returnParamDescription != null)
+            {
+                apiReturnDescription.ParamDescription = new CommonDescription() {Name = method.ReturnParameter.Name , Description = returnParamDescription.Description };
+            }
+            if (returnParamValue != null)
+            {
+                apiReturnDescription.MaxValue = returnParamValue.MaxValue;
+                apiReturnDescription.MinValue = returnParamValue.MinValue;
+            }
+            if (returnParamRequired != null)
+            {
+                apiReturnDescription.Required = returnParamRequired.Required;
+            }
+
+            apiMethodDescription.ReturnDescription = apiReturnDescription;
+
+            return apiMethodDescription;
         }
     }
 }

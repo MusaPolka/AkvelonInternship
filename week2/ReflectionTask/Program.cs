@@ -10,10 +10,17 @@ namespace Documentation
 
             var specifier = new Specifier<VkApi>();
             var methodNames = specifier.GetApiMethodNames();
-            Console.WriteLine(specifier.GetApiDescription());
+            /*Console.WriteLine(specifier.GetApiDescription());
             Console.WriteLine(specifier.GetApiMethodDescription("Authorize"));
-            Console.ReadLine();
-           /* foreach (var methodName in methodNames)
+            ApiParamDescription apiParamDescription = specifier.GetApiMethodParamFullDescription("SelectAudio", "batchSize");
+
+            Console.WriteLine(apiParamDescription.MinValue);
+            Console.WriteLine(apiParamDescription.MaxValue);
+            Console.WriteLine(apiParamDescription.Required);
+            Console.WriteLine(apiParamDescription.ParamDescription.Name);
+            Console.WriteLine(apiParamDescription.ParamDescription.Description);
+            Console.ReadLine();*/
+            foreach (var methodName in methodNames)
             {
                 WriteWithColor($"{methodName}", ConsoleColor.Yellow);
 
@@ -35,7 +42,9 @@ namespace Documentation
                 }
 
                 Console.WriteLine();
-            }*/
+                
+            }
+            Console.ReadLine();
         }
 
         private static void WriteParamDescription(ApiParamDescription description)
