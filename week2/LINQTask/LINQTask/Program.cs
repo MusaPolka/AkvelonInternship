@@ -9,7 +9,12 @@ namespace LINQTask
         static void Main(string[] args)
         {
            FilterService filterService = new FilterService();
-           filterService.FilterOut();
+           var list = filterService.FilterOut();
+
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item.Country} - {item.StoreName} - {item.YearOfBirth} - {item.ConsumerCode} - {item.ArticleNumber} - {item.PriceAmount}");
+            }
         }
     }
 }

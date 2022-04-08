@@ -16,8 +16,10 @@ namespace LINQTask
         List<Price> prices = DataSeeder.SeedPrice();
         List<Purchase> purchases = DataSeeder.SeedPurchases();
 
-        public void FilterOut()
+        public List<ReturnList> FilterOut()
         {
+            List<ReturnList> returnList = new List<ReturnList>();
+
             var list = purchases.Join(consumers, p => p.ConsumerCode, c => c.ConsumerCode, (p, c) => new
             {
                 ConsumerCode = p.ConsumerCode,
@@ -74,8 +76,18 @@ namespace LINQTask
 
             foreach (var item in list)
             {
-                Console.WriteLine($"{item.Country} - {item.StoreName} - {item.YearOfBirth} - {item.ConsumerCode} - {item.ArticleNumber} - {item.PriceAmount}");
+                returnList.Add(new ReturnList
+                {
+                    Country = item.Country,
+                    StoreName = item.StoreName,
+                    ArticleNumber = item.ArticleNumber,
+                    ConsumerCode = item.ConsumerCode,
+                    YearOfBirth = item.YearOfBirth,
+                    PriceAmount = item.PriceAmount
+                });
             }
+            
+            return returnList;
         }
     }
 }
