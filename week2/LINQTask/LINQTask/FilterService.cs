@@ -69,10 +69,12 @@ namespace LINQTask
                 .GroupBy(x => new { x.Country, x.StoreName })
                 .Select(c => c.ToList()
                 .FindAll(x => x.YearOfBirth == c.Max(y => y.YearOfBirth)))
-                .SelectMany(x => x)
+                .SelectMany(x => x.Where(x => x.Country == x.Country))
                 .OrderBy(x => x.Country)
                 .ThenBy(x => x.StoreName)
                 .ToList();
+
+            
 
             foreach (var item in list)
             {
@@ -86,7 +88,19 @@ namespace LINQTask
                     PriceAmount = item.PriceAmount
                 });
             }
-            
+
+            for (int i = 0; i < returnList.Count - 1; i++)
+            {
+                if (returnList[i].Country == returnList[i + 1].Country &&
+                        returnList[i].StoreName == returnList[i + 1].StoreName &&
+                        returnList[i].ConsumerCode == returnList[i + 1].ConsumerCode)
+                {
+
+                    returnList[i].PriceAmount += returnList[i + 1].PriceAmount;
+                    returnList.RemoveAt(i + 1);
+                }
+            }
+
             return returnList;
         }
     }

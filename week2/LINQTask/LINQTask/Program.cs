@@ -13,7 +13,7 @@ namespace LINQTask
 
             foreach (var item in list)
             {
-                Console.WriteLine($"{item.Country} - {item.StoreName} - {item.YearOfBirth} - {item.ConsumerCode} - {item.ArticleNumber} - {item.PriceAmount}");
+                Console.WriteLine($"{item.Country} - {item.StoreName} - {item.YearOfBirth} - {item.ConsumerCode} - {item.PriceAmount}");
             }
         }
     }

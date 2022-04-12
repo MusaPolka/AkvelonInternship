@@ -67,6 +67,7 @@ namespace LINQTask.Data
                 new Purchase(){ConsumerCode = 4, ArticleNumber = "EF789-1234", StoreName = "Green"},
                 new Purchase(){ConsumerCode = 4, ArticleNumber = "AB123-1234", StoreName = "Green"},
                 new Purchase(){ConsumerCode = 1, ArticleNumber = "AB123-1234", StoreName = "Green"},
+                new Purchase(){ConsumerCode = 1, ArticleNumber = "CD456-7891", StoreName = "Magnum"},
                 new Purchase(){ConsumerCode = 1, ArticleNumber = "CD456-7891", StoreName = "Magnum"}
             };
 
