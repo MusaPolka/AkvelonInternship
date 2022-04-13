@@ -6,76 +6,109 @@ namespace LINQTests
 {
     public class FilterServiceTests
     {
-        [Fact]
-        public void FilterOut_shouldInputHighestYearOfBirth()
+        [Theory]
+        [InlineData(2000, "Kazakhstan", "Magnum", 1, 3400, 0)]
+        public void FilterOut_shouldInputCorrectFirstPurchase(int yearOfBirth, string country,
+            string storeName, int consumerCode, int totalPrice, int index)
         {
             FilterService filterService = new FilterService();
             var list = filterService.FilterOut();
-            var actual = list[0].YearOfBirth;
+            var actualYearOfBirth = list[index].YearOfBirth;
+            var actualCountry = list[index].Country;
+            var actualStoreName = list[index].StoreName;
+            var actualConsumerCode = list[index].ConsumerCode;
+            var actualTotalPrice = list[index].PriceAmount;
 
-            var expected = 2000;
+            var expectedYearOfBirth = yearOfBirth;
+            var expectedCountry = country;
+            var expectedStoreName = storeName;
+            var expectedConsumerCode = consumerCode;
+            var expectedTotalPrice = totalPrice;
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expectedYearOfBirth, actualYearOfBirth);
+            Assert.Equal(expectedCountry, actualCountry);
+            Assert.Equal(expectedStoreName, actualStoreName);
+            Assert.Equal(expectedConsumerCode, actualConsumerCode);
+            Assert.Equal(expectedTotalPrice, actualTotalPrice);
         }
 
-        [Fact]
-        public void FilterOut_shouldInputCorrectCountry()
+        [Theory]
+        [InlineData(2000, "Russia", "FixPrice", 1, 850, 1)]
+        public void FilterOut_shouldInputCorrectSecondPurchase(int yearOfBirth, string country,
+            string storeName, int consumerCode, int totalPrice, int index)
         {
             FilterService filterService = new FilterService();
             var list = filterService.FilterOut();
-            var actual = list[0].Country;
+            var actualYearOfBirth = list[index].YearOfBirth;
+            var actualCountry = list[index].Country;
+            var actualStoreName = list[index].StoreName;
+            var actualConsumerCode = list[index].ConsumerCode;
+            var actualTotalPrice = list[index].PriceAmount;
 
-            var expected = "Kazakhstan";
+            var expectedYearOfBirth = yearOfBirth;
+            var expectedCountry = country;
+            var expectedStoreName = storeName;
+            var expectedConsumerCode = consumerCode;
+            var expectedTotalPrice = totalPrice;
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expectedYearOfBirth, actualYearOfBirth);
+            Assert.Equal(expectedCountry, actualCountry);
+            Assert.Equal(expectedStoreName, actualStoreName);
+            Assert.Equal(expectedConsumerCode, actualConsumerCode);
+            Assert.Equal(expectedTotalPrice, actualTotalPrice);
         }
 
-        [Fact]
-        public void FilterOut_shouldInputCorrectStore()
+        [Theory]
+        [InlineData(2000, "Russia", "Green", 1, 850, 2)]
+        public void FilterOut_shouldInputCorrectThordPurchase(int yearOfBirth, string country,
+            string storeName, int consumerCode, int totalPrice, int index)
         {
             FilterService filterService = new FilterService();
             var list = filterService.FilterOut();
-            var actual = list[0].StoreName;
+            var actualYearOfBirth = list[index].YearOfBirth;
+            var actualCountry = list[index].Country;
+            var actualStoreName = list[index].StoreName;
+            var actualConsumerCode = list[index].ConsumerCode;
+            var actualTotalPrice = list[index].PriceAmount;
 
-            var expected = "Magnum";
+            var expectedYearOfBirth = yearOfBirth;
+            var expectedCountry = country;
+            var expectedStoreName = storeName;
+            var expectedConsumerCode = consumerCode;
+            var expectedTotalPrice = totalPrice;
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expectedYearOfBirth, actualYearOfBirth);
+            Assert.Equal(expectedCountry, actualCountry);
+            Assert.Equal(expectedStoreName, actualStoreName);
+            Assert.Equal(expectedConsumerCode, actualConsumerCode);
+            Assert.Equal(expectedTotalPrice, actualTotalPrice);
         }
 
-        [Fact]
-        public void FilterOut_shouldInputCorrectConsumerCode()
+        [Theory]
+        [InlineData(1998, "Ukrain", "Green", 4, 2850, 3)]
+        public void FilterOut_shouldInputCorrectFourthPurchase(int yearOfBirth, string country,
+            string storeName, int consumerCode, int totalPrice, int index)
         {
             FilterService filterService = new FilterService();
             var list = filterService.FilterOut();
-            var actual = list[0].ConsumerCode;
+            var actualYearOfBirth = list[index].YearOfBirth;
+            var actualCountry = list[index].Country;
+            var actualStoreName = list[index].StoreName;
+            var actualConsumerCode = list[index].ConsumerCode;
+            var actualTotalPrice = list[index].PriceAmount;
 
-            var expected = 1;
+            var expectedYearOfBirth = yearOfBirth;
+            var expectedCountry = country;
+            var expectedStoreName = storeName;
+            var expectedConsumerCode = consumerCode;
+            var expectedTotalPrice = totalPrice;
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expectedYearOfBirth, actualYearOfBirth);
+            Assert.Equal(expectedCountry, actualCountry);
+            Assert.Equal(expectedStoreName, actualStoreName);
+            Assert.Equal(expectedConsumerCode, actualConsumerCode);
+            Assert.Equal(expectedTotalPrice, actualTotalPrice);
         }
 
-        [Fact]
-        public void FilterOut_shouldInputCorrectArticleNumber()
-        {
-            FilterService filterService = new FilterService();
-            var list = filterService.FilterOut();
-            var actual = list[0].ArticleNumber;
-
-            var expected = "CD456-7891";
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void FilterOut_shouldInputCorrectPrice()
-        {
-            FilterService filterService = new FilterService();
-            var list = filterService.FilterOut();
-            var actual = list[0].PriceAmount;
-
-            var expected = 1700;
-
-            Assert.Equal(expected, actual);
-        }
     }
 }

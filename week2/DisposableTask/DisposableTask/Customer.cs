@@ -10,7 +10,7 @@ namespace DisposableTask
     public class Customer : IDisposable
     {
         private StringReader _reader;
-        bool disposed;
+        private bool disposed;
 
         public Customer(string s)
         {
