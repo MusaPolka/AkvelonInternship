@@ -1,5 +1,5 @@
-![Screenshot](img\issue.png)
+![alt text](https://github.com/MusaPolka/AkvelonInternship/blob/master/issue.png?raw=true)
 
-![Screenshot](img\issue1.png)
+![alt text](https://github.com/MusaPolka/AkvelonInternship/blob/master/issue1.png?raw=true)
 
-![Screenshot](img\issue2.png)
+![alt text](https://github.com/MusaPolka/AkvelonInternship/blob/master/issue2.png?raw=true)
