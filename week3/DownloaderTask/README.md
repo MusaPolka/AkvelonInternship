@@ -1,5 +1,1 @@
-![Screenshot](img\issue.png)
-
-![Screenshot](img\issue1.png)
-
-![Screenshot](img\issue2.png)
+![issue 1](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
