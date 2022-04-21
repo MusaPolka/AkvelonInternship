@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 
 namespace ThreadSynchronization
@@ -9,6 +10,11 @@ namespace ThreadSynchronization
         static AutoResetEvent autoResetEvent = new AutoResetEvent(false);
         static void Main(string[] args)
         {
+            if (System.Diagnostics.Process.GetProcessesByName
+                (System.IO.Path.GetFileNameWithoutExtension
+                (System.Reflection.Assembly.GetEntryAssembly().Location))
+                .Count() > 1) return;
+
             Thread firstThread = new Thread(() => Loop());
             firstThread.Name = "1";
             firstThread.Start();
@@ -64,15 +70,15 @@ namespace ThreadSynchronization
                 Thread.Sleep(7000);
                 Console.WriteLine($"Thread {Thread.CurrentThread.Name} set signal");
                 manualResetEvent.Set();
-                
+
             }
-            if(Thread.CurrentThread.Name == "2")
+            if (Thread.CurrentThread.Name == "2")
             {
                 Thread.Sleep(5000);
                 Console.WriteLine($"Thread {Thread.CurrentThread.Name} set signal");
                 autoResetEvent.Set();
             }
-            
+
         }
 
         static void WaitForManual()
