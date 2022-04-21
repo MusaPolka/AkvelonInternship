@@ -12,65 +12,59 @@ namespace NightClub.Models
         TrackList trackList = new TrackList();
         DancerList dancerList = new DancerList(10);
         Track currentTrack = new Track();
-        DJ dj = new DJ(10);
+        DJ dj = new DJ(5);
+        ManualResetEvent resetEvent = new ManualResetEvent(false);
 
         public void BeginParty()
         {
             dj.CreatePlayList(trackList);
             dancerList.CreateDancers();
 
-            while (true)
+            Thread trackthread = new Thread(() => PlayTrack());
+            trackthread.Start();
+
+            foreach (var dancer in dancerList.Dancers)
             {
-                Thread trackThread = new Thread(() => PlayTrack());               
-                trackThread.Start();
-
-
-                if (currentTrack == null)
-                {
-                    break;
-                }
-
-                Thread dancerThread = new Thread(() => Dance(currentTrack));
+                Thread dancerThread = new Thread(() => Dance(dancer));
                 dancerThread.Start();
-
-                Thread.Sleep(10000);
-                
             }
         }
 
-        void Dance(Track track)
+        void Dance(Dancer dancer)
         {
-            if (currentTrack != null)
-                Console.WriteLine($"New track is {currentTrack.MusicType}");
-
             while (true)
             {
-
-                foreach (var dancer in dancerList.Dancers)
+                if (trackList.isTheEnd)
                 {
-                    Console.WriteLine(dancer.DanceMove(track));
-                    Thread.Sleep(100);
-
-                    if (trackList.isChanged)
-                    {
-                        break;
-                    }
-                }
-                if (trackList.isChanged)
-                {
-                    trackList.isChanged = false;
                     break;
                 }
+
+                resetEvent.WaitOne();
+
+                Console.WriteLine(dancer.DanceMove(currentTrack));
+                Thread.Sleep(100);
             }
         }
 
         void PlayTrack()
         {
-            currentTrack = dj.ChangeTrack(trackList);
+            while (trackList.Tracks.Count > 0)
+            {
+                currentTrack = dj.ChangeTrack(trackList);
 
-            Thread.Sleep(10000);
+                Console.WriteLine(currentTrack.MusicType);
 
-            trackList.isChanged = true; 
+                Thread.Sleep(1000);
+
+                resetEvent.Set();
+
+                Thread.Sleep(5000);
+
+                resetEvent.Reset();
+            }
+
+            trackList.isTheEnd = true;
+            Thread.Sleep(1000);
         }
     }
 }

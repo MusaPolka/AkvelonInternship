@@ -10,7 +10,7 @@ namespace NightClub.Models
     public class TrackList
     {
         public List<Track> Tracks { get;} = new List<Track>();
-        public bool isChanged { get; set; } = false;
+        public bool isTheEnd { get; set; } = false;
 
     }
 }
