@@ -10,10 +10,21 @@ namespace ThreadSynchronization
         static AutoResetEvent autoResetEvent = new AutoResetEvent(false);
         static void Main(string[] args)
         {
-            if (System.Diagnostics.Process.GetProcessesByName
-                (System.IO.Path.GetFileNameWithoutExtension
-                (System.Reflection.Assembly.GetEntryAssembly().Location))
-                .Count() > 1) return;
+            bool isNotExecuting;
+            Mutex mutex = new Mutex(true,
+                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName,
+                out isNotExecuting);
+
+            if (isNotExecuting)
+            {
+                mutex.ReleaseMutex();
+                GC.KeepAlive(mutex);
+            }
+            else
+            {
+                Console.WriteLine("Only one instance of this program can be executed");
+                return;
+            }
 
             Thread firstThread = new Thread(() => Loop());
             firstThread.Name = "1";
